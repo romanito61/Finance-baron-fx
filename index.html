@@ -460,13 +460,12 @@
       </div>
       <div class="featured-stats">
         <div class="stat-box">
-          <div class="stat-label">VIX</div>
-          <div class="stat-value" id="f-vix-val">—</div>
-          <div class="stat-sub" id="f-vix-sub"></div>
+          <div class="stat-label">Semaine</div>
+          <div class="stat-value" id="f-semaine" style="font-size:16px">—</div>
         </div>
         <div class="stat-box">
-          <div class="stat-label">Top devise</div>
-          <div class="stat-value" id="f-devise" style="font-size:15px">—</div>
+          <div class="stat-label">Type</div>
+          <div class="stat-value" id="f-type" style="font-size:15px">—</div>
         </div>
       </div>
     </div>
@@ -558,15 +557,9 @@
     document.getElementById('f-date').textContent = formatDate(r.date);
     document.getElementById('f-title').textContent = r.title || 'Rapport sans titre';
     document.getElementById('f-resume').textContent = r.resume || '';
-    document.getElementById('f-cta').href = r.notionUrl || '#';
-
-    const vixRaw = (r.vix || '').split('—')[0].trim();
-    const vixSub = (r.vix || '').split('—')[1]?.trim() || vixLabel(vixRaw);
-    const vEl = document.getElementById('f-vix-val');
-    vEl.textContent = vixRaw || '—';
-    vEl.className = 'stat-value ' + vixClass(vixRaw);
-    document.getElementById('f-vix-sub').textContent = vixSub;
-    document.getElementById('f-devise').textContent = r.topDevise || '—';
+    document.getElementById('f-cta').href = r.pdfUrl || r.notionUrl || '#';
+    document.getElementById('f-semaine').textContent = r.semaine || '—';
+    document.getElementById('f-type').textContent = r.type || '—';
   }
 
   // ─── Render grid
@@ -585,9 +578,7 @@
 
     grid.innerHTML = reports.map(r => {
       const typeInfo = TYPES[r.type] || { label: r.type || 'Daily', clsCard: 'daily-card' };
-      const vixRaw  = (r.vix || '').split('—')[0].trim();
-      const vixSub  = (r.vix || '').split('—')[1]?.trim() || vixLabel(vixRaw);
-      const href = r.notionUrl || '#';
+      const href = r.pdfUrl || r.notionUrl || '#';
       return `
       <a class="report-card" href="${href}" target="_blank">
         <div class="card-meta">
@@ -595,20 +586,15 @@
           <span class="card-date">${formatDate(r.date)}</span>
         </div>
         <div class="card-title">${r.title || 'Rapport sans titre'}</div>
-        ${r.resume ? `<div class="card-resume">${r.resume}</div>` : ''}
         <div class="card-footer">
           <div class="card-indicators">
-            ${vixRaw ? `<div class="indicator">
-              <span class="ind-label">VIX</span>
-              <span class="ind-value ${vixClass(vixRaw)}">${vixRaw} <small style="font-weight:400;font-size:11px">${vixSub}</small></span>
-            </div>` : ''}
-            ${r.topDevise ? `<div class="indicator">
-              <span class="ind-label">Top devise</span>
-              <span class="ind-value">${r.topDevise}</span>
+            ${r.semaine ? `<div class="indicator">
+              <span class="ind-label">Semaine</span>
+              <span class="ind-value">${r.semaine}</span>
             </div>` : ''}
           </div>
           <span class="card-link">
-            Lire
+            ${r.pdfUrl ? 'PDF' : 'Notion'}
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </span>
         </div>
