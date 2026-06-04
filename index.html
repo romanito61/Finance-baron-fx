@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Finance Baron FX — Research</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --navy:       #1C2B4A;
+      --navy-mid:   #243860;
+      --navy-light: #2E4A7A;
+      --orange:     #E8601C;
+      --gold:       #C9A84C;
+      --gold-light: #E8C878;
+      --white:      #FFFFFF;
+      --bg:         #F2F5F9;
+      --card-bg:    #FFFFFF;
+      --text:       #1A2744;
+      --text-mid:   #3D5280;
+      --text-muted: #6B7A99;
+      --border:     #DDE3EE;
+      --shadow:     0 2px 12px rgba(28,43,74,0.08);
+      --shadow-lg:  0 8px 32px rgba(28,43,74,0.14);
+      --radius:     8px;
+      --radius-lg:  12px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); }
+    a { text-decoration: none; color: inherit; }
+
+    /* ─── HEADER ──────────────────────────────── */
+    header {
+      background: var(--navy);
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 3px solid var(--orange);
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .logo-icon {
+      width: 38px;
+      height: 38px;
+      background: var(--orange);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 900;
+      color: white;
+      letter-spacing: -1px;
+    }
+    .logo-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.1;
+    }
+    .logo-main {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--white);
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    .logo-sub {
+      font-size: 10px;
+      font-weight: 500;
+      color: var(--gold-light);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    nav {
+      display: flex;
+      gap: 4px;
+    }
+    .nav-btn {
+      padding: 6px 16px;
+      border-radius: 4px;
+      font-size: 13px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.7);
+      cursor: pointer;
+      transition: all 0.15s;
+      border: none;
+      background: transparent;
+    }
+    .nav-btn:hover, .nav-btn.active {
+      color: white;
+      background: rgba(255,255,255,0.12);
+    }
+    .nav-btn.active {
+      background: var(--orange);
+      color: white;
+    }
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .date-badge {
+      font-size: 12px;
+      color: rgba(255,255,255,0.5);
+      font-weight: 400;
+    }
+
+    /* ─── HERO STRIP ──────────────────────────── */
+    .hero-strip {
+      background: linear-gradient(135deg, var(--navy-mid) 0%, var(--navy) 100%);
+      padding: 40px 24px 36px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .container { max-width: 1220px; margin: 0 auto; }
+    .section-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 16px;
+    }
+
+    /* ─── FEATURED CARD ───────────────────────── */
+    .featured-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: var(--radius-lg);
+      padding: 32px 36px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 32px;
+      align-items: center;
+      transition: border-color 0.2s;
+    }
+    .featured-card:hover { border-color: rgba(232,96,28,0.5); }
+    .featured-meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    .badge-daily   { background: rgba(232,96,28,0.18); color: #FF8A5E; }
+    .badge-weekly  { background: rgba(201,168,76,0.2);  color: var(--gold-light); }
+    .badge-asia    { background: rgba(52,199,89,0.15);  color: #6EE08C; }
+    .badge-london  { background: rgba(139,92,246,0.15); color: #B48AFF; }
+    .badge-us      { background: rgba(239,68,68,0.15);  color: #FF8080; }
+    .featured-date {
+      font-size: 12px;
+      color: rgba(255,255,255,0.45);
+      font-weight: 400;
+    }
+    .featured-title {
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--white);
+      line-height: 1.25;
+      margin-bottom: 12px;
+    }
+    .featured-resume {
+      font-size: 14px;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.65;
+      max-width: 640px;
+    }
+    .featured-stats {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      min-width: 200px;
+    }
+    .stat-box {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      text-align: center;
+    }
+    .stat-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 6px;
+    }
+    .stat-value {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--white);
+    }
+    .stat-value.risk-on  { color: #6EE08C; }
+    .stat-value.risk-neu { color: var(--gold-light); }
+    .stat-value.risk-off { color: #FF8080; }
+    .stat-sub {
+      font-size: 11px;
+      color: rgba(255,255,255,0.4);
+      margin-top: 2px;
+    }
+    .featured-cta {
+      margin-top: 24px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 22px;
+      background: var(--orange);
+      color: white;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      transition: background 0.15s, transform 0.1s;
+    }
+    .featured-cta:hover {
+      background: #d4541a;
+      transform: translateY(-1px);
+    }
+
+    /* ─── MAIN CONTENT ────────────────────────── */
+    main {
+      padding: 40px 24px 80px;
+    }
+    .main-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 28px;
+    }
+    .section-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .filter-row {
+      display: flex;
+      gap: 8px;
+    }
+    .filter-btn {
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid var(--border);
+      background: var(--white);
+      color: var(--text-muted);
+      transition: all 0.15s;
+    }
+    .filter-btn:hover { border-color: var(--navy); color: var(--navy); }
+    .filter-btn.active {
+      background: var(--navy);
+      border-color: var(--navy);
+      color: white;
+    }
+
+    /* ─── GRID ────────────────────────────────── */
+    .reports-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    /* ─── REPORT CARD ─────────────────────────── */
+    .report-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: box-shadow 0.2s, transform 0.15s, border-color 0.2s;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+    .report-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 4px; height: 100%;
+      background: var(--border);
+      transition: background 0.2s;
+    }
+    .report-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-2px); border-color: #C4CDE0; }
+    .report-card:hover::before { background: var(--orange); }
+    .card-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .card-meta .badge { /* reuse badge for card */}
+    .badge-daily-card   { background: #FFF0EA; color: var(--orange); }
+    .badge-weekly-card  { background: #FDF6E3; color: #B08A30; }
+    .badge-asia-card    { background: #EDFAF3; color: #2E9950; }
+    .badge-london-card  { background: #F3EEFF; color: #7C3AED; }
+    .badge-us-card      { background: #FEF0F0; color: #DC2626; }
+    .card-date {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-weight: 400;
+    }
+    .card-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.35;
+    }
+    .card-resume {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      flex: 1;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+      margin-top: auto;
+    }
+    .card-indicators {
+      display: flex;
+      gap: 14px;
+    }
+    .indicator {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .ind-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .ind-value {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .ind-value.risk-on  { color: #16A34A; }
+    .ind-value.risk-neu { color: #B08A30; }
+    .ind-value.risk-off { color: #DC2626; }
+    .card-link {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--orange);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .card-link:hover { color: #c4511a; }
+
+    /* ─── EMPTY + LOADING ─────────────────────── */
+    .state-box {
+      grid-column: 1/-1;
+      text-align: center;
+      padding: 80px 24px;
+      color: var(--text-muted);
+    }
+    .state-box .icon { font-size: 48px; margin-bottom: 16px; opacity: 0.4; }
+    .state-box h3 { font-size: 16px; font-weight: 600; margin-bottom: 8px; color: var(--text); }
+    .state-box p { font-size: 13px; line-height: 1.6; max-width: 360px; margin: 0 auto; }
+    .spinner {
+      width: 36px; height: 36px;
+      border: 3px solid var(--border);
+      border-top-color: var(--orange);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 16px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ─── FOOTER ──────────────────────────────── */
+    footer {
+      background: var(--navy);
+      color: rgba(255,255,255,0.4);
+      text-align: center;
+      padding: 24px;
+      font-size: 12px;
+    }
+    footer strong { color: rgba(255,255,255,0.7); }
+
+    /* ─── RESPONSIVE ──────────────────────────── */
+    @media (max-width: 1024px) {
+      .reports-grid { grid-template-columns: repeat(2, 1fr); }
+      .featured-card { grid-template-columns: 1fr; }
+      .featured-stats { flex-direction: row; }
+    }
+    @media (max-width: 640px) {
+      .reports-grid { grid-template-columns: 1fr; }
+      .featured-title { font-size: 20px; }
+      nav { display: none; }
+      .featured-stats { flex-wrap: wrap; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════ HEADER ═══════════════════════════ -->
+<header>
+  <div class="logo">
+    <div class="logo-icon">FB</div>
+    <div class="logo-text">
+      <span class="logo-main">Finance Baron</span>
+      <span class="logo-sub">FX Research</span>
+    </div>
+  </div>
+  <nav>
+    <button class="nav-btn active" onclick="setFilter('all', this)">Tous</button>
+    <button class="nav-btn" onclick="setFilter('Daily', this)">Daily</button>
+    <button class="nav-btn" onclick="setFilter('Weekly', this)">Weekly</button>
+    <button class="nav-btn" onclick="setFilter('session', this)">Sessions</button>
+  </nav>
+  <div class="header-right">
+    <span class="date-badge" id="today-date"></span>
+  </div>
+</header>
+
+<!-- ═══════════════════════════ HERO ═════════════════════════════ -->
+<section class="hero-strip">
+  <div class="container">
+    <div class="section-label">Dernier rapport</div>
+    <div class="featured-card" id="featured" style="display:none;">
+      <div class="featured-body">
+        <div class="featured-meta">
+          <span class="badge" id="f-badge"></span>
+          <span class="featured-date" id="f-date"></span>
+        </div>
+        <div class="featured-title" id="f-title"></div>
+        <div class="featured-resume" id="f-resume"></div>
+        <a class="featured-cta" id="f-cta" href="#" target="_blank">
+          Lire le rapport
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+      <div class="featured-stats">
+        <div class="stat-box">
+          <div class="stat-label">VIX</div>
+          <div class="stat-value" id="f-vix-val">—</div>
+          <div class="stat-sub" id="f-vix-sub"></div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label">Top devise</div>
+          <div class="stat-value" id="f-devise" style="font-size:15px">—</div>
+        </div>
+      </div>
+    </div>
+    <div id="featured-loading" style="color:rgba(255,255,255,0.4);font-size:13px;padding:20px 0">
+      Chargement du dernier rapport…
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ MAIN ════════════════════════════ -->
+<main>
+  <div class="container">
+    <div class="main-header">
+      <span class="section-title">Archives</span>
+      <div class="filter-row" id="filter-row" style="display:none">
+        <button class="filter-btn active" onclick="filterCards('all', this)">Tous</button>
+        <button class="filter-btn" onclick="filterCards('Daily', this)">Daily</button>
+        <button class="filter-btn" onclick="filterCards('Weekly', this)">Weekly</button>
+        <button class="filter-btn" onclick="filterCards('session', this)">Sessions</button>
+      </div>
+    </div>
+
+    <div class="reports-grid" id="grid">
+      <div class="state-box">
+        <div class="spinner"></div>
+        <h3>Chargement des rapports…</h3>
+        <p>Connexion à Notion en cours</p>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- ═══════════════════════════ FOOTER ══════════════════════════ -->
+<footer>
+  <strong>Finance Baron FX Research</strong> &nbsp;·&nbsp; Romain Baron — Stratégiste Macro FX &nbsp;·&nbsp; Usage personnel uniquement
+</footer>
+
+<script>
+  // ─── Date display
+  const d = new Date();
+  document.getElementById('today-date').textContent =
+    d.toLocaleDateString('fr-FR', { weekday:'long', day:'numeric', month:'long', year:'numeric' });
+
+  // ─── Helpers
+  const TYPES = {
+    'Daily':          { label:'Daily',          cls:'daily',   clsCard:'daily-card'   },
+    'Weekly':         { label:'Weekly',          cls:'weekly',  clsCard:'weekly-card'  },
+    'Session Asia':   { label:'Session Asia',    cls:'asia',    clsCard:'asia-card'    },
+    'Session London': { label:'Session London',  cls:'london',  clsCard:'london-card'  },
+    'Session US':     { label:'Session US',      cls:'us',      clsCard:'us-card'      },
+  };
+
+  function badgeHtml(type, dark=false) {
+    const t = TYPES[type] || { label: type, cls:'daily', clsCard:'daily-card' };
+    const cls = dark ? `badge badge-${t.cls}` : `badge badge-${t.clsCard}`;
+    return `<span class="${cls}">${t.label}</span>`;
+  }
+
+  function vixClass(vixStr) {
+    if (!vixStr) return '';
+    const n = parseFloat(vixStr);
+    if (n < 15)  return 'risk-on';
+    if (n < 20)  return 'risk-neu';
+    return 'risk-off';
+  }
+  function vixLabel(vixStr) {
+    const n = parseFloat(vixStr);
+    if (n < 15)  return 'Risk-ON';
+    if (n < 20)  return 'Neutre';
+    return 'Risk-OFF';
+  }
+
+  function formatDate(iso) {
+    if (!iso) return '';
+    const dt = new Date(iso + 'T12:00:00');
+    return dt.toLocaleDateString('fr-FR', { day:'numeric', month:'long', year:'numeric' });
+  }
+
+  let allReports = [];
+  let currentFilter = 'all';
+
+  // ─── Render featured
+  function renderFeatured(r) {
+    document.getElementById('featured-loading').style.display = 'none';
+    document.getElementById('featured').style.display = 'grid';
+
+    document.getElementById('f-badge').className = `badge badge-${(TYPES[r.type]||{cls:'daily'}).cls}`;
+    document.getElementById('f-badge').textContent = (TYPES[r.type]||{label:r.type}).label;
+    document.getElementById('f-date').textContent = formatDate(r.date);
+    document.getElementById('f-title').textContent = r.title || 'Rapport sans titre';
+    document.getElementById('f-resume').textContent = r.resume || '';
+    document.getElementById('f-cta').href = r.notionUrl || '#';
+
+    const vixRaw = (r.vix || '').split('—')[0].trim();
+    const vixSub = (r.vix || '').split('—')[1]?.trim() || vixLabel(vixRaw);
+    const vEl = document.getElementById('f-vix-val');
+    vEl.textContent = vixRaw || '—';
+    vEl.className = 'stat-value ' + vixClass(vixRaw);
+    document.getElementById('f-vix-sub').textContent = vixSub;
+    document.getElementById('f-devise').textContent = r.topDevise || '—';
+  }
+
+  // ─── Render grid
+  function renderGrid(reports) {
+    const grid = document.getElementById('grid');
+    document.getElementById('filter-row').style.display = 'flex';
+
+    if (!reports.length) {
+      grid.innerHTML = `<div class="state-box">
+        <div class="icon">📋</div>
+        <h3>Aucun rapport trouvé</h3>
+        <p>Les rapports générés par la skill apparaîtront ici automatiquement.</p>
+      </div>`;
+      return;
+    }
+
+    grid.innerHTML = reports.map(r => {
+      const typeInfo = TYPES[r.type] || { label: r.type || 'Daily', clsCard: 'daily-card' };
+      const vixRaw  = (r.vix || '').split('—')[0].trim();
+      const vixSub  = (r.vix || '').split('—')[1]?.trim() || vixLabel(vixRaw);
+      const href = r.notionUrl || '#';
+      return `
+      <a class="report-card" href="${href}" target="_blank">
+        <div class="card-meta">
+          <span class="badge badge-${typeInfo.clsCard}">${typeInfo.label}</span>
+          <span class="card-date">${formatDate(r.date)}</span>
+        </div>
+        <div class="card-title">${r.title || 'Rapport sans titre'}</div>
+        ${r.resume ? `<div class="card-resume">${r.resume}</div>` : ''}
+        <div class="card-footer">
+          <div class="card-indicators">
+            ${vixRaw ? `<div class="indicator">
+              <span class="ind-label">VIX</span>
+              <span class="ind-value ${vixClass(vixRaw)}">${vixRaw} <small style="font-weight:400;font-size:11px">${vixSub}</small></span>
+            </div>` : ''}
+            ${r.topDevise ? `<div class="indicator">
+              <span class="ind-label">Top devise</span>
+              <span class="ind-value">${r.topDevise}</span>
+            </div>` : ''}
+          </div>
+          <span class="card-link">
+            Lire
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </span>
+        </div>
+      </a>`;
+    }).join('');
+  }
+
+  // ─── Filter
+  function filterCards(type, btn) {
+    currentFilter = type;
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    applyFilter();
+  }
+  function setFilter(type, btn) {
+    currentFilter = type;
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    // also sync filter row
+    document.querySelectorAll('.filter-btn').forEach(b => {
+      b.classList.toggle('active', b.textContent.trim().toLowerCase() === type.toLowerCase() || (type==='all' && b.textContent.trim()==='Tous'));
+    });
+    applyFilter();
+  }
+  function applyFilter() {
+    let filtered = allReports;
+    if (currentFilter !== 'all') {
+      if (currentFilter === 'session') {
+        filtered = allReports.filter(r => r.type && r.type.startsWith('Session'));
+      } else {
+        filtered = allReports.filter(r => r.type === currentFilter);
+      }
+    }
+    renderGrid(filtered.slice(1)); // skip index 0 (featured)
+  }
+
+  // ─── Fetch from API
+  async function loadReports() {
+    try {
+      const res = await fetch('/api/reports');
+      if (!res.ok) throw new Error('API error ' + res.status);
+      const data = await res.json();
+      allReports = data;
+
+      if (data.length > 0) {
+        renderFeatured(data[0]);
+        renderGrid(data.slice(1));
+      } else {
+        document.getElementById('featured-loading').textContent = 'Aucun rapport disponible pour le moment.';
+        renderGrid([]);
+      }
+      document.getElementById('filter-row').style.display = 'flex';
+    } catch (err) {
+      console.error(err);
+      document.getElementById('featured-loading').textContent = 'Erreur de chargement — vérifie la configuration Vercel.';
+      document.getElementById('grid').innerHTML = `<div class="state-box">
+        <div class="icon">⚠️</div>
+        <h3>Impossible de charger les rapports</h3>
+        <p>Vérifie que NOTION_TOKEN et NOTION_DATABASE_ID sont correctement configurés dans Vercel.</p>
+      </div>`;
+    }
+  }
+
+  loadReports();
+</script>
+</body>
+</html>

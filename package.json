@@ -1,0 +1,8 @@
+{
+  "name": "finance-baron-fx-site",
+  "version": "1.0.0",
+  "description": "Finance Baron FX Research — Personal reports portal",
+  "dependencies": {
+    "@notionhq/client": "^2.2.15"
+  }
+}
